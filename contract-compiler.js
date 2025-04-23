@@ -5,8 +5,11 @@ const hypc = require("@theqrl/hypc");
 var input = {
     language: 'Hyperion',
     sources: {
-        'ZondBridge.hyp': {
-            content: fs.readFileSync("./contracts/ZondBridge.hyp").toString(),
+        'ZondAtomicSwap.hyp': {
+            content: fs.readFileSync("./contracts/ZondAtomicSwap.hyp").toString(),
+        },
+        'IERC20.hyp': {
+            content: fs.readFileSync("./contracts/openzeppelin-contracts/IERC20.hyp").toString(),
         }
     },
     settings: {
@@ -18,8 +21,48 @@ var input = {
     }
 };
 
+/* All imports of solidity contract should be mentioned here (if any) otherwise should be left blank */
+function findImports(path) {
+    if (path === '@openzeppelin-contracts/ReentrancyGuard.hyp')
+        return {
+            contents:
+                fs.readFileSync("./contracts/openzeppelin-contracts/ReentrancyGuard.hyp").toString()
+        };
+    else if (path === '@openzeppelin-contracts/IERC20.hyp')
+        return {
+            contents:
+                fs.readFileSync("./contracts/openzeppelin-contracts/IERC20.hyp").toString()
+        };
+    else if (path === '@openzeppelin-contracts/Address.hyp')
+        return {
+            contents:
+                fs.readFileSync("./contracts/openzeppelin-contracts/Address.hyp").toString()
+        };
+    else if (path === '@openzeppelin-contracts/SafeERC20.hyp')
+        return {
+            contents:
+                fs.readFileSync("./contracts/openzeppelin-contracts/SafeERC20.hyp").toString()
+        };
+    else if (path === '@openzeppelin-contracts/IERC1363.hyp')
+        return {
+            contents:
+                fs.readFileSync("./contracts/openzeppelin-contracts/IERC1363.hyp").toString()
+        };
+    else if (path === '@openzeppelin-contracts/Errors.hyp')
+        return {
+            contents:
+                fs.readFileSync("./contracts/openzeppelin-contracts/Errors.hyp").toString()
+        };
+    else if (path === '@openzeppelin-contracts/IERC165.hyp')
+        return {
+            contents:
+                fs.readFileSync("./contracts/openzeppelin-contracts/IERC165.hyp").toString()
+        };
+    else return { error: 'File not found' };
+}
+
 function GetCompilerOutput() {
-    const output = JSON.parse(hypc.compile(JSON.stringify(input)));
+    const output = JSON.parse(hypc.compile(JSON.stringify(input), { import: findImports }));
     return output;
 }
 
