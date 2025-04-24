@@ -25,7 +25,7 @@ const deployZondAtomicSwapContract = async () => {
     console.log('Attempting to deploy ZondAtomicSwap contract from account:', acc.address)
 
     const output = contractCompiler.GetCompilerOutput()
-
+    console.log(output)
     const contractABI = output.contracts['ZondAtomicSwap.hyp']['ZondAtomicSwap'].abi
     const contractByteCode = output.contracts['ZondAtomicSwap.hyp']['ZondAtomicSwap'].zvm.bytecode.object
     const contract = new web3.zond.Contract(contractABI)

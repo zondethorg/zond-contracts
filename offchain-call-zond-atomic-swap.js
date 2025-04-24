@@ -38,7 +38,7 @@ const showSwap = async (swapID) => {
         assetLocked: s.assetLocked === '0x0000000000000000000000000000000000000000' ? 'ZND (native)' : s.assetLocked,
         amountLocked: web3.utils.fromWei(s.amountLocked, 'ether'),
         locker: s.locker,
-        recipientRaw: s.recipientRaw,
+        recipient: s.recipient,
         desiredAssetRaw: s.desiredAssetRaw,
         desiredAmount: s.desiredAmount,
         expiryTs: new Date(Number(s.expiryTs) * 1000).toISOString(),
@@ -49,10 +49,10 @@ const showSwap = async (swapID) => {
 (async () => {
   await printContractSummary();
 
-  const [,, locker, secret, recipientRaw] = process.argv;
-  if (locker && secret && recipientRaw) {
+  const [,, locker, secret, recipient] = process.argv;
+  if (locker && secret && recipient) {
     const hashSecret = '0x' + crypto.createHash('sha256').update(secret).digest('hex')
-    const swapID = await contract.methods.previewSwapID(locker, hashSecret, recipientRaw).call();
+    const swapID = await contract.methods.previewSwapID(locker, hashSecret, recipient).call();
     await showSwap(swapID);
   }
 })().catch(console.error);
