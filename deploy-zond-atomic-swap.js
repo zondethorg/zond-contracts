@@ -21,19 +21,16 @@ const receiptHandler = function (receipt) {
     console.log("Contract address ", receipt.contractAddress)
 }
 
-const relayerAddress = process.env.RELAYER_ADDRESS
-const treasuryAddress = process.env.TREASURY_ADDRESS
-
-const deployZondBridgeContract = async () => {
-    console.log('Attempting to deploy ZondBridge contract from account:', acc.address)
+const deployZondAtomicSwapContract = async () => {
+    console.log('Attempting to deploy ZondAtomicSwap contract from account:', acc.address)
 
     const output = contractCompiler.GetCompilerOutput()
 
-    const contractABI = output.contracts['ZondBridge.hyp']['ZondBridge'].abi
-    const contractByteCode = output.contracts['ZondBridge.hyp']['ZondBridge'].zvm.bytecode.object
+    const contractABI = output.contracts['ZondAtomicSwap.hyp']['ZondAtomicSwap'].abi
+    const contractByteCode = output.contracts['ZondAtomicSwap.hyp']['ZondAtomicSwap'].zvm.bytecode.object
     const contract = new web3.zond.Contract(contractABI)
 
-    const deployOptions = { data: contractByteCode, arguments: [relayerAddress, treasuryAddress] }
+    const deployOptions = { data: contractByteCode, arguments: [] }
     const contractDeploy = contract.deploy(deployOptions)
     const estimatedGas = await contractDeploy.estimateGas({ from: acc.address })
     const txObj = { type: '0x2', gas: estimatedGas, from: acc.address, data: contractDeploy.encodeABI() }
@@ -44,4 +41,4 @@ const deployZondBridgeContract = async () => {
         .on('error', console.error)
 }
 
-deployZondBridgeContract()
+deployZondAtomicSwapContract()
