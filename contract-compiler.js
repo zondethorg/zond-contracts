@@ -10,9 +10,16 @@ var input = {
         },
         'IERC20.hyp': {
             content: fs.readFileSync("./contracts/openzeppelin-contracts/IERC20.hyp").toString(),
+        },
+        'MockERC20.hyp': {
+            content: fs.readFileSync("./contracts/MockERC20.hyp").toString(),
         }
     },
     settings: {
+        optimizer: {
+            enabled: true
+        },
+        viaIR: true,
         outputSelection: {
             '*': {
                 '*': ['*']
@@ -57,6 +64,36 @@ function findImports(path) {
         return {
             contents:
                 fs.readFileSync("./contracts/openzeppelin-contracts/IERC165.hyp").toString()
+        };
+    else if (path === '@openzeppelin-contracts/Ownable.hyp')
+        return {
+            contents:
+                fs.readFileSync("./contracts/openzeppelin-contracts/Ownable.hyp").toString()
+        };
+    else if (path === '@openzeppelin-contracts/Pausable.hyp')
+        return {
+            contents:
+                fs.readFileSync("./contracts/openzeppelin-contracts/Pausable.hyp").toString()
+        };
+    else if (path === '@openzeppelin-contracts/Context.hyp')
+        return {
+            contents:
+                fs.readFileSync("./contracts/openzeppelin-contracts/Context.hyp").toString()
+        };
+    else if (path === '@openzeppelin-contracts/IERC20Metadata.hyp')
+        return {
+            contents:
+                fs.readFileSync("./contracts/openzeppelin-contracts/IERC20Metadata.hyp").toString()
+        };
+    else if (path === '@openzeppelin-contracts/ERC20.hyp')
+        return {
+            contents:
+                fs.readFileSync("./contracts/openzeppelin-contracts/ERC20.hyp").toString()
+        };
+    else if (path === '@openzeppelin-contracts/draft-IERC6093.hyp')
+        return {
+            contents:
+                fs.readFileSync("./contracts/openzeppelin-contracts/draft-IERC6093.hyp").toString()
         };
     else return { error: 'File not found' };
 }
