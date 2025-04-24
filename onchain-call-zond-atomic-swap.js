@@ -19,7 +19,7 @@ web3.zond.transactionConfirmationBlocks =
 
 const atomicSwapContractAddress = process.env.ZOND_ATOMIC_SWAP_CONTRACT_ADDRESS
 const secret = process.env.SECRET
-const recipientAddress = process.env.EVM_RECIPIENT_ADDRESS
+const recipientAddress = process.env.ZOND_RECIPIENT_ADDRESS
 const expiryTs = process.env.EXPIRY_TS
   ? BigInt(process.env.EXPIRY_TS).toString()
   : BigInt(Math.floor(Date.now() / 1000) + 3600).toString()
@@ -46,7 +46,7 @@ const IERC20_ABI = output.contracts['IERC20.hyp']['IERC20'].abi
 const lockSwap = async () => {
   try {
     console.log('Locker', acc.address)
-    console.log('Recipient (EVM)', recipientAddress)
+    console.log('Recipient', recipientAddress)
     console.log('Asset locked', tokenAddress)
     console.log('Amount locked', amountLocked)
     console.log('Desired asset (EVM)', desiredAssetAddr)
